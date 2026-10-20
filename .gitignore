@@ -28,6 +28,7 @@ oh-package-lock.json5
 
 # Packaged binaries and generated JS resources
 *.tgz
+!/example/rnoh_package/testerino/rnoh-testerino-0.0.12.tgz
 *.har
 *.hap
 *.hsp

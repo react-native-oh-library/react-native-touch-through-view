@@ -15,6 +15,7 @@ import {
   View,
 } from 'react-native';
 import ImageZoomBase from '@react-native-ohos/react-native-image-pan-zoom';
+import { Tester, TestSuite, TestCase } from '@rnoh/testerino';
 import {
   TouchThroughView,
   TouchThroughWrapper,
@@ -83,7 +84,7 @@ const TouchThroughOverlay = memo(function TouchThroughOverlay() {
   );
 });
 
-export function ReactNativeTouchThroughViewExample(): React.JSX.Element {
+function TouchThroughScene(): React.JSX.Element {
   const [playCount, setPlayCount] = useState(0);
   const statsRef = useRef<ZoomStats>({
     moves: 0,
@@ -158,7 +159,6 @@ export function ReactNativeTouchThroughViewExample(): React.JSX.Element {
             </ImageZoom>
           </View>
         </View>
-
         <ZoomStatsPanel statsRef={statsRef} />
         <Button title={`Play (${playCount})`} onPress={handlePlayPress} />
       </View>
@@ -168,7 +168,32 @@ export function ReactNativeTouchThroughViewExample(): React.JSX.Element {
   );
 }
 
+export default function ReactNativeTouchThroughViewExample(): React.JSX.Element {
+  return (
+    <Tester style={styles.page}>
+      <ScrollView style={styles.page}>
+        <TestSuite name="react-native-touch-through-view 测试套件">
+          <TestCase
+            key="touch-through-view-gestures"
+            tags={['C_API']}
+            itShould="支持点击、拖动、缩放透传及非透传区域的列表滚动">
+            <View style={styles.scene}>
+              <TouchThroughScene />
+            </View>
+          </TestCase>
+        </TestSuite>
+      </ScrollView>
+    </Tester>
+  );
+}
+
 const styles = StyleSheet.create({
+  page: {
+    flex: 1,
+  },
+  scene: {
+    height: 640,
+  },
   container: {
     flex: 1,
     backgroundColor: '#eee',
@@ -274,20 +299,18 @@ const styles = StyleSheet.create({
   },
 });
 
-export default {
-  displayName: 'react-native-touch-through-view',
-  framework: 'React',
-  category: 'UI',
-  title: 'react-native-touch-through-view',
-  documentationURL: '',
-  description:
-    'Source-library style demo for touch-through over a scroll view.',
-  examples: [
-    {
-      title: 'source example',
-      render: function (): React.JSX.Element {
-        return <ReactNativeTouchThroughViewExample />;
-      },
+export const displayName = 'react-native-touch-through-view';
+export const framework = 'React';
+export const category = 'UI';
+export const title = 'react-native-touch-through-view';
+export const documentationURL = '';
+export const description =
+  'Source-library style demo for touch-through over a scroll view.';
+export const examples = [
+  {
+    title: 'source example',
+    render: function (): React.JSX.Element {
+      return <ReactNativeTouchThroughViewExample />;
     },
-  ],
-};
+  },
+];

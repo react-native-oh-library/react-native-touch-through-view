@@ -7,17 +7,19 @@
     "codegen": "npm run codegen:lib && react-native codegen-harmony --ets-output-path ./harmony/entry/src/main/ets/generated",
     "dev": "npm run codegen && react-native bundle-harmony --dev --minify=false",
     "prod": "npm run codegen && react-native bundle-harmony --dev=false --minify=true",
-    "postinstall": "node ./scripts/create-build-profile",
+    "postinstall": "node scripts/prepare-testerino.js && node ./scripts/create-build-profile",
     "pack:pkg": "npm --prefix .. run pack",
     "install:pkg": "npm run pack:pkg && npm install @react-native-ohos/react-native-touch-through-view@file:../react-native-ohos-react-native-touch-through-view-1.2.1-beta.1.tgz --legacy-peer-deps",
     "fast-install-project": "npm run pack:pkg && npm install --legacy-peer-deps",
     "fastpkg": "npm run fast-install-project && npm run dev",
+    "fast:pkg": "npm run fastpkg",
     "codegen:lib": "react-native codegen-lib-harmony --no-safety-check --npm-package-name react-native-touch-through-view --cpp-output-path ../harmony/touch_through_view/src/main/cpp/generated --ets-output-path ../harmony/touch_through_view/src/main/ets/generated --cpp-components-spec-paths ../specs"
   },
   "dependencies": {
     "@react-native-oh/react-native-harmony": "npm:@react-native-oh/react-native-harmony@0.82.30",
     "@react-native-ohos/react-native-image-pan-zoom": "2.2.0",
     "@react-native-ohos/react-native-touch-through-view": "file:../react-native-ohos-react-native-touch-through-view-1.2.1-beta.1.tgz",
+    "@rnoh/testerino": "file:rnoh_package/testerino/rnoh-testerino-0.0.12.tgz",
     "react": "19.1.1",
     "react-native": "0.82.1"
   },

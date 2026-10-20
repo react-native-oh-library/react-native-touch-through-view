@@ -1,0 +1,23 @@
+{
+  "name": "touch-through-view-js-tests",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "cd .. && node jest/node_modules/jest/bin/jest.js --config jest/jest.config.js --runInBand",
+    "test:coverage": "npm test -- --coverage"
+  },
+  "devDependencies": {
+    "@babel/core": "7.29.7",
+    "@babel/plugin-transform-react-jsx": "7.29.7",
+    "@babel/preset-env": "7.29.7",
+    "@babel/preset-flow": "7.29.7",
+    "@babel/preset-typescript": "7.29.7",
+    "babel-jest": "29.7.0",
+    "jest": "29.7.0",
+    "prop-types": "15.8.1",
+    "react": "19.1.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

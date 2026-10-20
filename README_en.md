@@ -10,7 +10,7 @@ The version correspondence is as follows:
 
 | Name | Version(Npm Address) | Release Information | Supported RN Version | Supported Autolink | Compile API Version | Community Baseline Version | Source code address |
 | ------------ | ------------ | ------------------------------ | ------------- | ------------- | ------------------------ | ------------- | ------------- |
-| @react-native-ohos/react-native-touch-through-view | [1.2.1(in development)](https://www.npmjs.com/package/@react-native-ohos/react-native-touch-through-view) | [GitHub Releases](https://github.com/react-native-oh-library/react-native-touch-through-view/releases) |`0.72.* / 0.77.* /0.82.* / 0.84.*`| Yes |  partially(0.72/0.82/0.84)） | 1.2.1-beta.1 | [master](https://github.com/react-native-oh-library/react-native-touch-through-view/tree/master) |
+| @react-native-ohos/react-native-touch-through-view | [1.2.1(in development)](https://www.npmjs.com/package/@react-native-ohos/react-native-touch-through-view) | [GitHub Releases](https://github.com/react-native-oh-library/react-native-touch-through-view/releases) |`0.72.* / 0.77.* /0.82.* / 0.84.*`| partially(0.72/0.82/0.84) | API 12 | 1.2.0-beta.1 | [master](https://github.com/react-native-oh-library/react-native-touch-through-view/tree/master) |
 
 ## Introduction
 
@@ -309,9 +309,11 @@ None
 │   └── TouchThroughWrapperNativeComponent.ts
 ├── example                      # Example project (RNOH 0.82 template + upstream demo)
 │   ├── src
-│   │   ├── App.tsx               # Upstream demo page (pass-through and zoom demonstrations)
-│   │   ├── album.jpg             # Example image asset
-│   │   └── index.tsx             # Example root component (displays the demo directly)
+│   │   └── rnt
+│   │       ├── TouchThroughViewTest.tsx # RNT test page (click, pan/zoom, and scrolling)
+│   │       └── album.jpg         # Example image asset
+│   ├── rnoh_package/testerino    # Local testerino testing framework dependency
+│   ├── scripts                  # Build profile generation and testerino type compatibility
 │   ├── harmony                   # HarmonyOS example project (entry/AppScope, etc.)
 │   ├── package.json              # Example dependencies (file:../ library tgz)
 │   └── index.js / metro.config.js / tsconfig.json

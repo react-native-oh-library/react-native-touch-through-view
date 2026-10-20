@@ -10,7 +10,7 @@
 
 | 三方库名称    | 三方库版本（npm地址）    | 发布信息     | 支持RN版本    | Autolink     | 编译API版本     | 社区基线版本    | 源码地址   |
 | ------------ | ------------ | ------------------------------ | ------------- | ------------- | ------------------------ | ------------- | ------------- |
-| @react-native-ohos/react-native-touch-through-view | [1.2.1(开发中)](https://www.npmjs.com/package/@react-native-ohos/react-native-touch-through-view) | [GitHub Releases](https://github.com/react-native-oh-library/react-native-touch-through-view/releases) |`0.72.* / 0.77.* /0.82.* / 0.84.*`| 是 |  partially(0.72/0.82/0.84)） | 1.2.1-beta.1 | [master](https://github.com/react-native-oh-library/react-native-touch-through-view/tree/master) |
+| @react-native-ohos/react-native-touch-through-view | [1.2.1(开发中)](https://www.npmjs.com/package/@react-native-ohos/react-native-touch-through-view) | [GitHub Releases](https://github.com/react-native-oh-library/react-native-touch-through-view/releases) |`0.72.* / 0.77.* /0.82.* / 0.84.*`| partially(0.72/0.82/0.84) | API 12 | 1.2.0-beta.1 | [master](https://github.com/react-native-oh-library/react-native-touch-through-view/tree/master) |
 
 ## 简介
 
@@ -309,9 +309,11 @@ ViewProps
 │   └── TouchThroughWrapperNativeComponent.ts
 ├── example                      # 示例工程（RNOH 0.82 模板 + 上游 demo）
 │   ├── src
-│   │   ├── App.tsx               # 上游 demo 页面（含透传/缩放演示）
-│   │   ├── album.jpg             # 示例图片资源
-│   │   └── index.tsx             # 示例根组件（直接显示 demo）
+│   │   └── rnt
+│   │       ├── TouchThroughViewTest.tsx # RNT 测试页面（点击、拖动/缩放及滚动透传）
+│   │       └── album.jpg         # 示例图片资源
+│   ├── rnoh_package/testerino    # 本地 testerino 测试框架依赖
+│   ├── scripts                  # 构建配置生成及 testerino 类型兼容脚本
 │   ├── harmony                   # 示例鸿蒙工程（entry/AppScope 等）
 │   ├── package.json              # 示例依赖（file:../ 本库 tgz）
 │   └── index.js / metro.config.js / tsconfig.json
