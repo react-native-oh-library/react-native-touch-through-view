@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2026 Huawei Device Co., Ltd. All rights reserved
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 import React, {
   memo,
   useCallback,
@@ -9,7 +15,9 @@ import React, {
 import {
   Button,
   Image,
+  SafeAreaView,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   View,
@@ -150,13 +158,13 @@ function TouchThroughScene(): React.JSX.Element {
                   source={require('./album.jpg')}
                   style={styles.zoomImage}
                 />
-                <View style={styles.zoomBadge}>
-                  <Text style={styles.zoomBadgeText}>
-                    Drag me through the header
-                  </Text>
-                </View>
               </View>
             </ImageZoom>
+            <View pointerEvents="none" style={styles.zoomBadge}>
+              <Text style={styles.zoomBadgeText}>
+                Drag me through the header
+              </Text>
+            </View>
           </View>
         </View>
         <ZoomStatsPanel statsRef={statsRef} />
@@ -170,24 +178,31 @@ function TouchThroughScene(): React.JSX.Element {
 
 export default function ReactNativeTouchThroughViewExample(): React.JSX.Element {
   return (
-    <Tester style={styles.page}>
-      <ScrollView style={styles.page}>
-        <TestSuite name="react-native-touch-through-view 测试套件">
-          <TestCase
-            key="touch-through-view-gestures"
-            tags={['C_API']}
-            itShould="支持点击、拖动、缩放透传及非透传区域的列表滚动">
-            <View style={styles.scene}>
-              <TouchThroughScene />
-            </View>
-          </TestCase>
-        </TestSuite>
-      </ScrollView>
-    </Tester>
+    <SafeAreaView style={styles.safeArea}>
+      <StatusBar barStyle="light-content" />
+      <Tester style={styles.page}>
+        <ScrollView style={styles.page}>
+          <TestSuite name="react-native-touch-through-view 测试套件">
+            <TestCase
+              key="touch-through-view-gestures"
+              tags={['C_API']}
+              itShould="支持点击、拖动、缩放透传及非透传区域的列表滚动">
+              <View style={styles.scene}>
+                <TouchThroughScene />
+              </View>
+            </TestCase>
+          </TestSuite>
+        </ScrollView>
+      </Tester>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#222',
+  },
   page: {
     flex: 1,
   },
@@ -279,8 +294,8 @@ const styles = StyleSheet.create({
   },
   zoomBadge: {
     position: 'absolute',
-    left: 20,
-    top: 18,
+    left: 12,
+    top: 12,
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 999,

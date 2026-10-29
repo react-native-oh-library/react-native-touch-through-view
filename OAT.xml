@@ -5,8 +5,8 @@
         <policylist>
             <policy name="projectPolicy" desc="">
                 <policyitem type="license" name="MIT" path=".*" desc="license under the MIT"/>
-            </policy>
-            <policy name="projectPolicy" desc="">
+                <policyitem type="copyright" name="Huawei Device Co., Ltd." path=".*" desc="鸿蒙适配代码已有版权归属"/>
+                <policyitem type="copyright" name="Huawei Technologies Co., Ltd." path="jest/.*" desc="保留 Jest 文件原有版权声明，并继续检查许可证头"/>
                 <policyitem type="compatibility" name="GPL-2.0+" path=".*" desc="Process that runs independently, invoked by the X process."/>
                 <policyitem type="compatibility" name="Apache-2.0" path=".*" desc="不影响兼容性"/>
                 <policyitem type="compatibility" name="BSDStyleLicense" path=".*" desc="不影响兼容性" />
@@ -16,41 +16,42 @@
         </policylist>
         <filefilterlist>
             <filefilter name="defaultPolicyFilter" desc="Filters for compatibility，license header policies">
+                <filteritem type="filename" name="*.json" desc="JSON 元数据及资源配置，不支持版权头注释"/>
                 <filteritem type="filename" name="*.json5" desc="hvigor配置文件，DevEco Studio自动生成，不手动修改"/>
-                <filteritem type="filename" name="*/*.json5" desc="hvigor配置文件，DevEco Studio自动生成，不手动修改"/>
-                <filteritem type="filepath" name="harmony/touch_through_view/src/main/module.json" desc="原生模块清单文件，不添加版权头"/>
-                <filteritem type="filepath" name="components/.*" desc="第三方开源软件源码，不修改版权头，以防有修改版权风险"/>
-                <filteritem type="filepath" name="specs/.*" desc="Codegen类型定义文件，鸿蒙化适配新增代码，不强制版权头"/>
-                <filteritem type="filepath" name="index.*" desc="第三方开源软件源码，不修改版权头，以防有修改版权风险"/>
-                <filteritem type="filepath" name="harmony/.*\.ets" desc="HAR模块ArkTS源码，鸿蒙化适配新增代码，不强制版权头"/>
-                <filteritem type="filepath" name="harmony/.*\.cpp" desc="HAR模块C++源码，鸿蒙化适配新增代码，不强制版权头"/>
-                <filteritem type="filepath" name="harmony/.*\.h" desc="HAR模块C++头文件，鸿蒙化适配新增代码，不强制版权头"/>
-                <filteritem type="filename" name="CMakeLists.txt" desc="CMake构建配置文件，不添加版权头"/>
+                <filteritem type="filepath" name="components/TouchThroughView[.]js" desc="上游源码，保留 Facebook 原有版权和许可声明"/>
+                <filteritem type="filepath" name="components/TouchThroughWrapper[.]js" desc="上游源码，保留 Facebook 原有版权和许可声明"/>
+                <filteritem type="filepath" name="index[.]js" desc="上游原始导出入口，保留原文件"/>
+                <filteritem type="filepath" name="example/ReactNativeTouchThroughViewExample[.]js" desc="上游原始示例，保留原文件"/>
                 <filteritem type="filename" name=".gitignore" desc="配置文件，不添加版权头"/>
                 <filteritem type="filename" name=".npmignore" desc="npm忽略文件，不添加版权头"/>
-                <filteritem type="filepath" name="example/.*" desc="demo文件，不需要添加许可证头"/>
-                <filteritem type="filename" name="buildEnv.sh" desc="构建环境声明，不手动修改"/>
+                <filteritem type="filename" name=".eslintignore" desc="ESLint 忽略列表，不添加版权头"/>
+                <filteritem type="filename" name=".eslintrc" desc="JSON 格式的 ESLint 配置，不支持注释"/>
+                <filteritem type="filename" name=".watchmanconfig" desc="JSON 格式的 Watchman 配置，不支持注释"/>
+                <filteritem type="filename" name=".node-version" desc="Node 版本声明，不支持版权头注释"/>
+                <filteritem type="filename" name="README.OpenSource" desc="JSON 格式的上游元数据，不支持注释"/>
             </filefilter>
             <filefilter name="copyrightPolicyFilter" desc="Filters for copyright header policies">
+                <filteritem type="filename" name="*.json" desc="JSON 元数据及资源配置，不支持版权头注释"/>
                 <filteritem type="filename" name="*.json5" desc="hvigor配置文件，DevEco Studio自动生成，不手动修改"/>
-                <filteritem type="filename" name="*/*.json5" desc="hvigor配置文件，DevEco Studio自动生成，不手动修改"/>
-                <filteritem type="filepath" name="harmony/touch_through_view/src/main/module.json" desc="原生模块清单文件，不添加版权头"/>
-                <filteritem type="filepath" name="components/.*" desc="第三方开源软件源码，不修改版权头，以防有修改版权风险"/>
-                <filteritem type="filepath" name="specs/.*" desc="Codegen类型定义文件，鸿蒙化适配新增代码，不强制版权头"/>
-                <filteritem type="filepath" name="index.*" desc="第三方开源软件源码，不修改版权头，以防有修改版权风险"/>
-                <filteritem type="filepath" name="harmony/.*\.ets" desc="HAR模块ArkTS源码，鸿蒙化适配新增代码，不强制版权头"/>
-                <filteritem type="filepath" name="harmony/.*\.cpp" desc="HAR模块C++源码，鸿蒙化适配新增代码，不强制版权头"/>
-                <filteritem type="filepath" name="harmony/.*\.h" desc="HAR模块C++头文件，鸿蒙化适配新增代码，不强制版权头"/>
-                <filteritem type="filename" name="CMakeLists.txt" desc="CMake构建配置文件，不添加版权头"/>
+                <filteritem type="filepath" name="components/TouchThroughView[.]js" desc="上游源码，保留 Facebook 原有版权和许可声明"/>
+                <filteritem type="filepath" name="components/TouchThroughWrapper[.]js" desc="上游源码，保留 Facebook 原有版权和许可声明"/>
+                <filteritem type="filepath" name="index[.]js" desc="上游原始导出入口，保留原文件"/>
+                <filteritem type="filepath" name="example/ReactNativeTouchThroughViewExample[.]js" desc="上游原始示例，保留原文件"/>
                 <filteritem type="filename" name=".gitignore" desc="配置文件，不添加版权头"/>
                 <filteritem type="filename" name=".npmignore" desc="npm忽略文件，不添加版权头"/>
-                <filteritem type="filepath" name="example/.*" desc="demo文件，不需要添加许可证头"/>
-                <filteritem type="filename" name="buildEnv.sh" desc="构建环境声明，不手动修改"/>
+                <filteritem type="filename" name=".eslintignore" desc="ESLint 忽略列表，不添加版权头"/>
+                <filteritem type="filename" name=".eslintrc" desc="JSON 格式的 ESLint 配置，不支持注释"/>
+                <filteritem type="filename" name=".watchmanconfig" desc="JSON 格式的 Watchman 配置，不支持注释"/>
+                <filteritem type="filename" name=".node-version" desc="Node 版本声明，不支持版权头注释"/>
+                <filteritem type="filename" name="README.OpenSource" desc="JSON 格式的上游元数据，不支持注释"/>
             </filefilter>
             <filefilter name="binaryFileTypePolicyFilter" desc="Filters for binary file policies">
-                <filteritem type="filepath" name="harmony/touch_through_view.har" desc="项目打包文件" />
-                <filteritem type="filepath" name="example/.*" desc="示例工程图片资源文件" />
-                <filteritem type="filepath" name="img/.*" desc="README图片资源文件" />
+                <filteritem type="filepath" name="harmony/touch_through_view[.]har" desc="本库原生 HAR 包"/>
+                <filteritem type="filepath" name="example/album[.]jpg" desc="上游示例展示图片"/>
+                <filteritem type="filepath" name="example/src/rnt/album[.]jpg" desc="RNT 示例展示图片"/>
+                <filteritem type="filepath" name="example/harmony/AppScope/resources/base/media/app_icon[.]png" desc="示例应用图标"/>
+                <filteritem type="filepath" name="example/harmony/entry/src/main/resources/base/media/icon[.]png" desc="示例 Ability 图标"/>
+                <filteritem type="filepath" name="example/rnoh_package/testerino/rnoh-testerino-0[.]0[.]12[.]tgz" desc="示例依赖的 testerino 测试框架包"/>
             </filefilter>
         </filefilterlist>
     </oatconfig>

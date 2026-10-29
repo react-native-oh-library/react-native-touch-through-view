@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2026 Huawei Device Co., Ltd. All rights reserved
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 // Keep testerino 0.0.12 source types compatible with the example's React 19 types.
 const fs = require('fs');
 const path = require('path');

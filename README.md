@@ -10,7 +10,7 @@
 
 | 三方库名称    | 三方库版本（npm地址）    | 发布信息     | 支持RN版本    | Autolink     | 编译API版本     | 社区基线版本    | 源码地址   |
 | ------------ | ------------ | ------------------------------ | ------------- | ------------- | ------------------------ | ------------- | ------------- |
-| @react-native-ohos/react-native-touch-through-view | [1.2.1(开发中)](https://www.npmjs.com/package/@react-native-ohos/react-native-touch-through-view) | [GitHub Releases](https://github.com/react-native-oh-library/react-native-touch-through-view/releases) |`0.72.* / 0.77.* /0.82.* / 0.84.*`| partially(0.72/0.82/0.84) | API 12 | 1.2.0-beta.1 | [master](https://github.com/react-native-oh-library/react-native-touch-through-view/tree/master) |
+| @react-native-ohos/react-native-touch-through-view | [1.2.1（开发中）](https://www.npmjs.com/package/@react-native-ohos/react-native-touch-through-view) | [GitHub Releases](https://github.com/react-native-oh-library/react-native-touch-through-view/releases) | `0.72.*` / `0.77.*` / `0.82.*` / `0.84.*` / `0.86.*` | 是 | API12+ | 1.2.0-beta.1 | [master](https://github.com/react-native-oh-library/react-native-touch-through-view/tree/master) |
 
 ## 简介
 
@@ -37,7 +37,7 @@ yarn add @react-native-ohos/react-native-touch-through-view
 
 |                                      | 是否支持autolink | RN框架版本 |
 |--------------------------------------|----------------|-----------|
-| 1.2.1                           | partially(0.72/0.82/0.84) | 0.72/0.82/0.84 |
+| 1.2.1 | Yes | 0.72 / 0.77 / 0.82 / 0.84 / 0.86 |
 
 使用AutoLink的工程需要根据该文档配置，Autolink框架指导文档：https://gitcode.com/CPF-RN/ohos_react_native/blob/master/docs/zh-cn/Autolinking.md
 
@@ -46,13 +46,13 @@ yarn add @react-native-ohos/react-native-touch-through-view
 <details>
   <summary>ManualLink: 此步骤为手动配置原生依赖项的指导</summary>
 
-首先需要使用 DevEco Studio 打开项目里的 HarmonyOS 工程 `harmony`。
+首先需要使用 DevEco Studio 打开项目里的 OpenHarmony 工程 `harmony`。
 
 ### 1. Overrides RN SDK
 
-为了让工程依赖同一个版本的 RN SDK，需要在工程根目录的 `oh-package.json5` 添加 overrides 字段，指向工程需要使用的 RN SDK 版本。替换的版本既可以是一个具体的版本号，也可以是一个模糊版本，还可以是本地存在的 HAR 包或源码目录。
+为了让工程依赖同一个版本的 RN SDK，需要在工程根目录的 `oh-package.json5` 添加 `overrides` 字段，指向工程需要使用的 RN SDK 版本。替换的版本既可以是一个具体的版本号，也可以是一个模糊版本，还可以是本地存在的 HAR 包或源码目录。
 
-关于该字段的作用请阅读[官方说明](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V5/ide-oh-package-json5-V5#zh-cn_topic_0000001792256137_overrides)
+关于该字段的作用请阅读[官方说明](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V5/ide-oh-package-json5-V5#zh-cn_topic_0000001792256137_overrides)。
 
 ```json
 {
@@ -67,14 +67,14 @@ yarn add @react-native-ohos/react-native-touch-through-view
 
 目前有两种方法：
 
-- 通过 har 包引入；
+- 通过 har 包引入。
 - 直接链接源码。
 
 方法一：通过 har 包引入（推荐）
 
 > [!TIP] har 包位于三方库安装路径的 `harmony` 文件夹下。
 
-打开 `entry/oh-package.json5`，添加以下依赖
+打开 `entry/oh-package.json5`，添加以下依赖：
 
 ```json
 "dependencies": {
@@ -93,7 +93,7 @@ ohpm install
 
 方法二：直接链接源码
 
-> [!TIP] 如需使用直接链接源码，请参考[直接链接源码说明](https://gitcode.com/CPF-RN/usage-docs/blob/master/zh-cn/link-source-code.md)
+> [!TIP] 如需使用直接链接源码，请参考[直接链接源码说明](https://gitcode.com/CPF-RN/usage-docs/blob/master/zh-cn/link-source-code.md)。
 
 ### 3. 配置 CMakeLists 和引入 TouchThroughViewPackage
 
@@ -106,7 +106,7 @@ set(CMAKE_SKIP_BUILD_RPATH TRUE)
 set(RNOH_APP_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 set(NODE_MODULES "${CMAKE_CURRENT_SOURCE_DIR}/../../../../../node_modules")
 + set(OH_MODULES "${CMAKE_CURRENT_SOURCE_DIR}/../../../oh_modules")
-set(RNOH_CPP_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../../../../../react-native-harmony/harmony/cpp")
+set(RNOH_CPP_DIR "${OH_MODULES}/@rnoh/react-native-openharmony/src/main/cpp")
 set(LOG_VERBOSITY_LEVEL 1)
 set(CMAKE_ASM_FLAGS "-Wno-error=unused-command-line-argument -Qunused-arguments")
 set(CMAKE_CXX_FLAGS "-fstack-protector-strong -Wl,-z,relro,-z,now,-z,noexecstack -s -fPIE -pie")
@@ -154,7 +154,7 @@ std::vector<std::shared_ptr<Package>> PackageProvider::getPackages(Package::Cont
 
 ### 4. 在 ArkTs 侧引入 TouchThroughViewPackage
 
-打开 `entry/src/main/ets/RNPackagesFactory.ts`，添加：
+打开 `entry/src/main/ets/RNPackagesFactory.ets`，添加：
 
 ```diff
   ...
@@ -166,6 +166,7 @@ export function createRNPackages(ctx: RNPackageContext): RNPackage[] {
   ];
 }
 ```
+
 </details>
 
 ### 运行
@@ -198,7 +199,7 @@ ohpm install
 
 ### 编译运行API要求
 
-无
+> [!TIP] 本库需要在 `API12+` 工程中编译，并在 `API12+` ROM 上运行。
 
 ## 使用示例
 
@@ -254,9 +255,9 @@ export default App;
 
 ## 接口说明
 
-> [!TIP] "Platform"列表示该属性在原三方库上支持的平台。
+> [!TIP] “平台”列表示该属性在原三方库上支持的平台。
 
-> [!TIP] "OpenHarmony Support"列为 yes 表示 OpenHarmony平台支持 该属性；no 则表示不支持；partially 表示部分支持。使用方法跨平台一致，效果对标 iOS 或 Android 的效果。
+> [!TIP] “OpenHarmony平台支持”列为 yes 表示 OpenHarmony 平台支持该属性；no 则表示不支持；partially 表示部分支持。使用方法跨平台一致，效果对标 iOS 或 Android 的效果。
 
 ### 组件
 
@@ -267,7 +268,7 @@ export default App;
 
 ### 属性
 
-ViewProps
+`ViewProps`
 
 两个组件均继承 ViewProps，无自定义属性。
 
@@ -288,50 +289,37 @@ ViewProps
 ````
 /react-native-touch-through-view  # 项目根目录
 ├── harmony                      # 鸿蒙适配代码
-│   └── touch_through_view        # 鸿蒙适配核心代码
-│       ├── build-profile.json5   # 模块构建配置
-│       ├── oh-package.json5      # 模块包配置
+│   ├── touch_through_view.har    # 原生 HAR 包
+│   └── touch_through_view        # 适配核心代码
 │       └── src/main
-│           ├── ets
-│           │   └── Index.ets     # ArkTS 包入口
-│           └── cpp
-│               ├── TouchThroughViewPackage.h                     # 原生包注册
-│               ├── TouchThroughViewComponentInstance.h           # 透传区域声明
-│               ├── TouchThroughViewComponentInstance.cpp         # 透传区域实现
-│               ├── TouchThroughWrapperComponentInstance.h        # 透传容器声明
-│               ├── TouchThroughWrapperComponentInstance.cpp      # 透传容器实现
-│               └── TouchThroughTrace.h                           # 触摸日志
+│           ├── ets/Index.ets     # ArkTS 包入口
+│           └── cpp              # 原生组件实现
+│               ├── TouchThroughTrace.h
+│               ├── TouchThroughViewPackage.h
+│               ├── TouchThroughViewComponentInstance.h
+│               ├── TouchThroughViewComponentInstance.cpp
+│               ├── TouchThroughWrapperComponentInstance.h
+│               └── TouchThroughWrapperComponentInstance.cpp
 ├── components                   # RN 组件
-│   ├── TouchThroughView.js       # 透传区域组件
-│   └── TouchThroughWrapper.js    # 透传容器组件
-├── specs                        # Codegen 类型文件
+│   ├── TouchThroughView.js
+│   └── TouchThroughWrapper.js
+├── specs                        # Codegen 类型定义
 │   ├── TouchThroughViewNativeComponent.ts
 │   └── TouchThroughWrapperNativeComponent.ts
-├── example                      # 示例工程（RNOH 0.82 模板 + 上游 demo）
-│   ├── src
-│   │   └── rnt
-│   │       ├── TouchThroughViewTest.tsx # RNT 测试页面（点击、拖动/缩放及滚动透传）
-│   │       └── album.jpg         # 示例图片资源
-│   ├── rnoh_package/testerino    # 本地 testerino 测试框架依赖
-│   ├── scripts                  # 构建配置生成及 testerino 类型兼容脚本
-│   ├── harmony                   # 示例鸿蒙工程（entry/AppScope 等）
-│   ├── package.json              # 示例依赖（file:../ 本库 tgz）
-│   └── index.js / metro.config.js / tsconfig.json
-├── index.js                     # RN 入口文件
+├── example                      # 示例工程
+│   ├── src/rnt/TouchThroughViewTest.tsx  # 测试页面
+│   ├── package.json
+│   └── package_*.json            # 72、77、82、84、86 的依赖配置
+├── index.js                     # RN 入口
 ├── index.d.ts                   # 类型声明
-├── buildEnv.sh                  # 示例工程位置声明（CI 构建用）
-├── README.md / README_en.md     # 中英文说明文档
-├── README.OpenSource            # 开源元数据（上游版本/Owner/上游 URL）
-├── CHANGELOG.md                 # 变更记录
-├── OAT.xml                      # 开源合规扫描清单
-├── LICENSE                      # 许可证
-└── package.json                 # 包元数据
+├── README.md                    # 中文安装使用说明
+└── README_en.md                 # 英文安装使用说明
 ````
 
 ## 贡献代码
 
-使用过程中发现任何问题都可以提交 [Issue](https://github.com/react-native-oh-library/react-native-touch-through-view/issues)，当然，也非常欢迎提交 [PR](https://github.com/react-native-oh-library/react-native-touch-through-view/pulls) 。
+使用过程中发现任何问题都可以提交 [Issue](https://github.com/react-native-oh-library/react-native-touch-through-view/issues)，当然，也非常欢迎提交 [PR](https://github.com/react-native-oh-library/react-native-touch-through-view/pulls)。
 
 ## 开源协议
 
-本项目基于 [MIT License](https://github.com/simonhoss/react-native-touch-through-view/blob/master/package.json#L24) ，请自由地享受和参与开源。
+本项目基于 [MIT License](https://github.com/simonhoss/react-native-touch-through-view/blob/master/package.json#L24)，请自由地享受和参与开源。
