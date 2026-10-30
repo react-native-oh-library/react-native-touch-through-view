@@ -5,6 +5,6 @@
   "main": "./src/main/ets/Index.ets",
   "license": "MIT",
   "dependencies": {
-    "@rnoh/react-native-openharmony": "0.82.30"
+    "@rnoh/react-native-openharmony": "file:../react_native_openharmony.har"
   }
 }

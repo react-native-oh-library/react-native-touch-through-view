@@ -1,4 +1,4 @@
-> Document Template：v0.4.2
+> Document Template: v0.4.2
 
 <p align="center">
   <h1 align="center"> <code>react-native-touch-through-view</code> </h1>
@@ -10,7 +10,7 @@ The version correspondence is as follows:
 
 | Name | Version(Npm Address) | Release Information | Supported RN Version | Supported Autolink | Compile API Version | Community Baseline Version | Source code address |
 | ------------ | ------------ | ------------------------------ | ------------- | ------------- | ------------------------ | ------------- | ------------- |
-| @react-native-ohos/react-native-touch-through-view | [1.2.1(in development)](https://www.npmjs.com/package/@react-native-ohos/react-native-touch-through-view) | [GitHub Releases](https://github.com/react-native-oh-library/react-native-touch-through-view/releases) |`0.72.* / 0.77.* /0.82.* / 0.84.*`| partially(0.72/0.82/0.84) | API 12 | 1.2.0-beta.1 | [master](https://github.com/react-native-oh-library/react-native-touch-through-view/tree/master) |
+| @react-native-ohos/react-native-touch-through-view | [1.2.1 (in development)](https://www.npmjs.com/package/@react-native-ohos/react-native-touch-through-view) | [GitHub Releases](https://github.com/react-native-oh-library/react-native-touch-through-view/releases) | `0.72.*` / `0.77.*` / `0.82.*` / `0.84.*` / `0.86.*` | Yes | API12+ | 1.2.0-beta.1 | [master](https://github.com/react-native-oh-library/react-native-touch-through-view/tree/master) |
 
 ## Introduction
 
@@ -37,7 +37,7 @@ yarn add @react-native-ohos/react-native-touch-through-view
 
 |                                      | Supported Autolink | Supported RN Version |
 |--------------------------------------|----------------|-----------|
-| 1.2.1                           | partially(0.72/0.82/0.84) | 0.72/0.82/0.84 |
+| 1.2.1 | Yes | 0.72 / 0.77 / 0.82 / 0.84 / 0.86 |
 
 Projects using AutoLink must follow the configuration instructions in the Autolinking guide: https://gitcode.com/CPF-RN/ohos_react_native/blob/master/docs/zh-cn/Autolinking.md
 
@@ -46,13 +46,13 @@ If your library version supports Autolink and your project has enabled it, you c
 <details>
   <summary>ManualLink: Instructions for manually configuring native dependencies</summary>
 
-First, open the HarmonyOS project `harmony` in DevEco Studio.
+Open the `harmony` directory of the OpenHarmony project in DevEco Studio.
 
 ### 1. Overrides RN SDK
 
-To ensure that the project uses the same RN SDK version across its dependencies, add an overrides field to `oh-package.json5` in the HarmonyOS project root, pointing to the required RN SDK version. The value can be an exact version, a version range, a local HAR package, or a source directory.
+To ensure that the project uses the same RN SDK version across its dependencies, add an `overrides` field to `oh-package.json5` in the HarmonyOS project root, pointing to the required RN SDK version. The value can be an exact version, a version range, a local HAR package, or a source directory.
 
-For details about this field, see the [official documentation](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V5/ide-oh-package-json5-V5#zh-cn_topic_0000001792256137_overrides)
+For details about this field, see the [official documentation](https://developer.huawei.com/consumer/en/doc/harmonyos-guides-V5/ide-oh-package-json5-V5#en-us_topic_0000001792256137_overrides).
 
 ```json
 {
@@ -65,16 +65,16 @@ For details about this field, see the [official documentation](https://developer
 
 ### 2. Introducing Native Code
 
-There are two methods:
+Currently, two methods are available:
 
-- Use a HAR package;
-- Link the source code directly.
+- Use the HAR file.
+- Directly link to the source code.
 
-Method 1: Use a HAR package (recommended)
+Method 1 (recommended): Use the HAR file.
 
 > [!TIP] The HAR package is located in the `harmony` folder of the installed library.
 
-Open `entry/oh-package.json5` and add the following dependency
+Open `entry/oh-package.json5` and add the following dependency:
 
 ```json
 "dependencies": {
@@ -82,7 +82,7 @@ Open `entry/oh-package.json5` and add the following dependency
   }
 ```
 
-Click the `sync` button in the upper-right corner
+Click the `sync` button in the upper-right corner.
 
 Alternatively, run the following commands in the terminal:
 
@@ -91,9 +91,9 @@ cd entry
 ohpm install
 ```
 
-Method 2: Link the source code directly
+Method 2: Directly link to the source code.
 
-> [!TIP] To link the source code directly, see the [source linking instructions](https://gitcode.com/CPF-RN/usage-docs/blob/master/en/link-source-code.md)
+> [!TIP] To link the source code directly, see the [source linking instructions](https://gitcode.com/CPF-RN/usage-docs/blob/master/en/link-source-code.md).
 
 ### 3. Configuring CMakeLists and Introducing TouchThroughViewPackage
 
@@ -106,7 +106,7 @@ set(CMAKE_SKIP_BUILD_RPATH TRUE)
 set(RNOH_APP_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 set(NODE_MODULES "${CMAKE_CURRENT_SOURCE_DIR}/../../../../../node_modules")
 + set(OH_MODULES "${CMAKE_CURRENT_SOURCE_DIR}/../../../oh_modules")
-set(RNOH_CPP_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../../../../../react-native-harmony/harmony/cpp")
+set(RNOH_CPP_DIR "${OH_MODULES}/@rnoh/react-native-openharmony/src/main/cpp")
 set(LOG_VERBOSITY_LEVEL 1)
 set(CMAKE_ASM_FLAGS "-Wno-error=unused-command-line-argument -Qunused-arguments")
 set(CMAKE_CXX_FLAGS "-fstack-protector-strong -Wl,-z,relro,-z,now,-z,noexecstack -s -fPIE -pie")
@@ -154,7 +154,7 @@ std::vector<std::shared_ptr<Package>> PackageProvider::getPackages(Package::Cont
 
 ### 4. Introducing TouchThroughViewPackage to ArkTS
 
-Open `entry/src/main/ets/RNPackagesFactory.ts` and add:
+Open `entry/src/main/ets/RNPackagesFactory.ets` and add:
 
 ```diff
   ...
@@ -166,11 +166,12 @@ export function createRNPackages(ctx: RNPackageContext): RNPackage[] {
   ];
 }
 ```
+
 </details>
 
-### Running
+## Running
 
-Click the `sync` button in the upper-right corner
+Click the `sync` button in the upper-right corner.
 
 Alternatively, run the following commands in the terminal:
 
@@ -198,7 +199,7 @@ None.
 
 ### API requirements
 
-None
+> [!TIP] This library requires `API12+` for compilation and execution.
 
 ## Example
 
@@ -254,9 +255,9 @@ Gestures starting in a pass-through area are delivered to the underlying compone
 
 ## Available APIs
 
-> [!TIP] The "Platform" column lists the platforms supported by the property in the original library.
+> [!TIP] The **Platform** column indicates the platforms supported by the property in the original third-party library.
 
-> [!TIP] In the "OpenHarmony Support" column, yes means the property is supported on OpenHarmony, no means it is unsupported, and partially means it is partially supported. Usage is consistent across platforms, with behavior aligned with iOS or Android.
+> [!TIP] In the **OpenHarmony Platform Support** column, **yes** means the property is supported on OpenHarmony, **no** means it is unsupported, and **partially** means it is partially supported. Usage is consistent across platforms, with behavior aligned with iOS or Android.
 
 ### Components
 
@@ -267,7 +268,7 @@ Gestures starting in a pass-through area are delivered to the underlying compone
 
 ### Properties
 
-ViewProps
+`ViewProps`
 
 Both components inherit ViewProps and have no custom properties.
 
@@ -288,44 +289,31 @@ None
 ````
 /react-native-touch-through-view  # Project root
 ├── harmony                      # HarmonyOS adaptation code
-│   └── touch_through_view        # Core HarmonyOS adaptation code
-│       ├── build-profile.json5   # Module build configuration
-│       ├── oh-package.json5      # Module package configuration
+│   ├── touch_through_view.har    # Native HAR package
+│   └── touch_through_view        # Core adaptation code
 │       └── src/main
-│           ├── ets
-│           │   └── Index.ets     # ArkTS package entry
-│           └── cpp
-│               ├── TouchThroughViewPackage.h                     # Native package registration
-│               ├── TouchThroughViewComponentInstance.h           # Pass-through area declaration
-│               ├── TouchThroughViewComponentInstance.cpp         # Pass-through area implementation
-│               ├── TouchThroughWrapperComponentInstance.h        # Pass-through wrapper declaration
-│               ├── TouchThroughWrapperComponentInstance.cpp      # Pass-through wrapper implementation
-│               └── TouchThroughTrace.h                           # Touch event logging
+│           ├── ets/Index.ets     # ArkTS package entry
+│           └── cpp              # Native component implementations
+│               ├── TouchThroughTrace.h
+│               ├── TouchThroughViewPackage.h
+│               ├── TouchThroughViewComponentInstance.h
+│               ├── TouchThroughViewComponentInstance.cpp
+│               ├── TouchThroughWrapperComponentInstance.h
+│               └── TouchThroughWrapperComponentInstance.cpp
 ├── components                   # RN components
-│   ├── TouchThroughView.js       # Pass-through area component
-│   └── TouchThroughWrapper.js    # Pass-through wrapper component
-├── specs                        # Codegen type definitions
+│   ├── TouchThroughView.js
+│   └── TouchThroughWrapper.js
+├── specs                        # Codegen definitions
 │   ├── TouchThroughViewNativeComponent.ts
 │   └── TouchThroughWrapperNativeComponent.ts
-├── example                      # Example project (RNOH 0.82 template + upstream demo)
-│   ├── src
-│   │   └── rnt
-│   │       ├── TouchThroughViewTest.tsx # RNT test page (click, pan/zoom, and scrolling)
-│   │       └── album.jpg         # Example image asset
-│   ├── rnoh_package/testerino    # Local testerino testing framework dependency
-│   ├── scripts                  # Build profile generation and testerino type compatibility
-│   ├── harmony                   # HarmonyOS example project (entry/AppScope, etc.)
-│   ├── package.json              # Example dependencies (file:../ library tgz)
-│   └── index.js / metro.config.js / tsconfig.json
-├── index.js                     # RN entry file
+├── example                      # Example project
+│   ├── src/rnt/TouchThroughViewTest.tsx  # Test page
+│   ├── package.json
+│   └── package_*.json            # Dependencies for RN 0.72, 0.77, 0.82, 0.84, and 0.86
+├── index.js                     # RN entry
 ├── index.d.ts                   # Type declarations
-├── buildEnv.sh                  # Example project paths for CI builds
-├── README.md / README_en.md     # Chinese and English documentation
-├── README.OpenSource            # Open-source metadata (upstream version/owner/URL)
-├── CHANGELOG.md                 # Changelog
-├── OAT.xml                      # Open-source compliance scan configuration
-├── LICENSE                      # License
-└── package.json                 # Package metadata
+├── README.md                    # Chinese installation and usage
+└── README_en.md                 # English installation and usage
 ````
 
 ## How to Contribute
